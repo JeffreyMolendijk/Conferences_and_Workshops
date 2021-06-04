@@ -1,6 +1,8 @@
 # AWS Summit Online notes - Day 1
 May 18th, Australia / New Zealand
 
+![Social sticker](summit-online-anz.png)
+
 ## Day One Keynote
 ### History and developments of EC2, including custom hardware. AWS aims to deliver new technologies to meet customer demands, Adam Beavis.
 * AWS Nitro removed virtualization overhead. The Nitro chips are the reason that new instance types are released every few months.
