@@ -1,0 +1,49 @@
+!! March Online DataEng Meetup
+Date: 17-03-2022
+Channel: https://www.youtube.com/dataengau
+Video link: https://www.youtube.com/watch?v=k5Exqls7QDc&ab_channel=DataEngAU
+Hosted by: Peter Hanssens
+
+§
+
+!!! Up and running with Materialize
+%%Andy Hattemer, Head of DevEx, Materialize%%
+
+* Materialize uses the same SQL we are all familiar with. Andy uses SQL for streaming, rather than getting a single transaction.
+* OLTP + OLAP architecture can become problematic as stakeholders become more data literate, and start "demanding" more data.
+* Latency between OLTP - OLAP can also cause some problems, where OLAP is not updated frequently enough.
+* Materialize replaces the OLAP as a new "OLVM", which is push based, keeps the requested data and updates it as new data become available.
+* You start by making a query for Materialize, that you intend you update continously. Materialize will keep updating the results.
+* Materialize is a database built around streaming data, but can also use CDC or log data.
+
+* You can connect to materialize using regular (Postgres) psql statements in the command line.
+* It is possible to create a MATERIALIZED VIEW which will return a table that is continously updated. 
+* With most databases it is not recommended to repeatedly submit the same queries, but for Materialize that doesn't matter, since the results are saved in memory.
+* In summary, Materialize lets you build a streaming application using SQL, whilst it takes care of the heavy lifting for you.
+* Q: Does Materialize run Debezium under the hood? A: Debezium (Kafka Connect) is used upstream of Materialize to prepare data.
+* Materialize maintains the minimum state required to answer your questions. It is ideal for fast changing data, rather than massive databases which are better for datalakes.
+* Materialize is best used for in-memory storage, and the amount that you actually keep there are usually small fractions of your database.
+
+§
+
+!!! Data Mesh 101
+%%Brett Randall, Senior Solutions Engineer, Confluent%%
+
+* Data mesh principles: There are many set standards in software architecture, but data mesh are the principles for data usage. 
+* Principle 1: Domain-driven design. This is a common architecture, meaning that whoever publishes data, should be the one who understands it. This model is different than a centralized owner, who must know all about the data, but this type has shown to have issues.
+* Principle 2: Data as a product. Data should be viewed as a product, and treated as such. This means that different teams could work on the data, and bug reports should able to be submitted. Start thinking about how the data should be available, in which regions and in which regions.
+* Principle 3: Self service platform. It requires a catalog for the catalog, metadata (e.g. is the data current, security, sharing rules, encryption status etc), and have set quality standards. It is about moving from lambda to kappa architectures. Data lineage is also included, allowing you to see where the data came from, and what has been done with it. Finally, think about how data is accessed (e.g. stream or API).
+* Principle 4: Federated governance. You can have both centralized and decentralized governance, by setting general rules but also letting teams set their own rules. For example, you can set common naming and semantics, and set common error handling procedures. 
+* Live demo of Confluent cloud, which is Kafka cloud native running on Azure/AWS. This demo shows some nice applications of the data mesh features, including the data lineage and catalog (During the Q & A).
+
+§
+
+!!! Data analytics made easy. (Building a Twitter scale analytics application under 10 mins)
+%%Will Xu, Product@Imply%%
+
+* Real time analytics image from Wall Street Journal. It shows how Amazon alters pricing dynamically, whilst competitors were slow to react.
+* Druid is the engine that is used commonly used for real-time analytics in most leading companies (minus Google/Facebook), due to its very high speed (depending on the scale).  
+* Building an analytics application is hard, mostly due to the infrastructure work, more than building the app. Imply Polaris takes care of the infrastructure management, leaving you to work on the app.
+* Imply has 60 trials, without the need for payments / credit card details. 
+* Will shows that once you made an app, it is very easy to scale up to any scale you will need (though the dashboard).
+* Imply already comes with data visualization tools, meaning you don't need external tools look PowerBI / Tableau. 

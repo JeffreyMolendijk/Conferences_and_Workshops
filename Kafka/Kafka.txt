@@ -1,0 +1,51 @@
+Below are my notes from a series of videos regarding data streaming, Karka and Confluent
+
+
+!! A Tour of Apache Kafka
+&&https://www.confluent.io/resources/?assetType=video&language=english&&
+
+Streaming data
+*   Kafka is a streaming data platform
+*   A streaming platform should be a distinct tool in your toolbox, like a relational database or traditional messaging system
+*   Traditional architectures focus on 'data at rest', whilst a streaming platform is focused on events and changes to data
+*   For messaging systems, the data is sent and after that it is gone. For Kafka, the data remains, it is simply made available when needed
+*   Data is writted to a Kafka topic; an 'ordered log of events'. Topics are ordered because external connectors append new data to the end of a topic
+
+
+Features of Kafka
+*   Kafka is robust and supports horizontal scalability
+*   Kafka is most suited for real-time, streaming and batch operations
+*   Financial institutions like Kafka since the data is immutable, so suited for audits
+*   Kafka scales by adding several partitions (containing the data) and multiple consumers that can read data from different partitions at the same time. Having multiple consumers adds fault tolerance in case a consumer dies.
+*   Kafka lets you replicate partitions between different brokers, to have 'durable' replicated data
+*   Kafka scaled linearly at each layer
+
+Kafka Connect
+*   Streaming data from/to Kafka is performed using 'connectors'. There are connectors to ingest and export data.
+*   Ingest connectors are called 'source connectors' and can retrieve data from files / databases / servers into Kafka 'topics'
+*   An export connector is called a 'sink connector', which forwards data from Kafka topics to for example Elasticsearch or Hadoop
+*   Kafka Connect can perform some simple transformations like mapping or filtering
+&&Source: https://docs.confluent.io/platform/current/connect/index.html&&
+
+Kafka Streams
+*   Data is typically not removed from topics, until its storage time has expired
+*   Kafka stream processes data one record-at-a-time whereas tools like Spark work on batches of data
+*   Kafka can analyze a stream and write to a change-log stream to keep track of the state. For example, when counting the occurences of names in a steam, it could generate a new stream where the names plus their increment 'number of occurences' are recorded (e.g. matt > matt > matt = [matt, 1]).
+*   Using this change-log stream, you won't have to retain the original data stream, as the change-log stream kept count of the occurences.
+*   'Compacting' a topic refers to the process of removing the stream values that are not needed anymore, since they are made redundant by the change-log stream
+
+
+Confluent
+*   About 80% of the code of Kafka was written by Confluent, but they provide a further ecosystem around Kafka
+*   KSQL is the service that lets you write SQL queries that are processed and updated by Kafka
+*   Confluent offers other paid features like replicators, auto data balancer and additional monitoring and administration
+
+When to use Kafka?
+*   If you need to scale your applications for large quantities of data
+*   If your tools are either complex in architecture of organization
+*   If you need buffering, it is write optimized and highly reliable. It can tolerate data spikes and downstream outages. It also has no back pressure problems.
+*   Kafka can move your data to multiple locations, rather than just one output
+*   It reduces the number of connections you need. You move from a point-to-point architecture to a hub-and-spoke architecture, where Kafka is central.
+*   Kafka solves the dual writes problem, where a web app needs to write data to a database, cache and an index. Instead with Kafka you would write to the log first, and Kafka can write to the other services. This also ensures that data is written in the guaranteed order.
+*   Confluent uses Debezian, where in an app data is written to a database, and only changes are written to the Kafka log. This is called 'change data capture'. For more information, watch the following presentation &&https://www.confluent.io/resources/kafka-summit-2020/change-data-capture-pipelines-with-debezium-and-kafka-streams/&&.
+
