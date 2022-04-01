@@ -1,0 +1,12 @@
+!! Fundamentals of Database Engineering
+%%Hussein Nasser%%
+%%https://www.udemy.com/course/database-engines-crash-course%%
+
+!!!! Course description
+In this document I keep notes from the Udemy course 'Fundamentals of Database Engineering' by Hussein Nasser.
+The course is an in-depth look at databases for intermediate and advanced users of databases. 
+
+!!!! About Hussein Nasser
+(Know about him from his youtube / spotify channel)
+
+!!!! Reason for taking the course
